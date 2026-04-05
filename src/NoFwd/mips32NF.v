@@ -1,7 +1,7 @@
 `default_nettype none
 `timescale 1ns / 1ps
 
-// single file version
+// single file version (does not have debugging paths)
 
 // MIPS Instruction Format:
 // j-type: [ opcode (6) | address (26) ], j 1000
