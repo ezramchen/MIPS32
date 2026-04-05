@@ -24,12 +24,12 @@ Both versions follow the classic 5-stage pipeline:
 
 For simplified instruction handling, the (main) control unit outputs a synthesized "32-bit register", with bit-fields allocated as follows:
 
-// MCU output (mctrl): [ WB (6) | MEM (5) | EX (6) | Cntrl Flow (5) | Special (4) | Spare (6) ]
-// [31:26] WB = [ RegWr | ResSrc (3) | RegDst (2) ]
-// [25:21] MEM = [ MemRd | MemWr | MemSz (2) | LdU ]
-// [20:15] EX = [ ALUSrc | ALUOp (3) | ExtOp | ShiftSrc ]
-// [14:10] Cntrl Flow = [ Branch | BranchType (2) | Jump | JumpReg ]
-// [9:6] Special = [ HIWr | LOWr | HiLoSrc | Trap ]
+- MCU output (mctrl): [ WB (6) | MEM (5) | EX (6) | Cntrl Flow (5) | Special (4) | Spare (6) ]
+- [31:26] WB = [ RegWr | ResSrc (3) | RegDst (2) ]
+- [25:21] MEM = [ MemRd | MemWr | MemSz (2) | LdU ]
+- [20:15] EX = [ ALUSrc | ALUOp (3) | ExtOp | ShiftSrc ]
+- [14:10] Cntrl Flow = [ Branch | BranchType (2) | Jump | JumpReg ]
+- [9:6] Special = [ HIWr | LOWr | HiLoSrc | Trap ]
 
 Some operations were not used in testing (i.e., Trap), and may not work as a result
 
