@@ -3,13 +3,11 @@
 //////////////////////////////////////////////////////////////////////////////////
 // Company: SJSU
 // Engineer: Ezra Chen
-// Create Date: 04/04/2026 07:39:15 PM
-// Module Name: IF_ID
+// Module Name: MCU
 // Project Name: MIPS32
 //////////////////////////////////////////////////////////////////////////////////
 
 // MIPS Instruction Format:
-
 // j-type: [ opcode (6) | address (26) ], j 1000
 // i-type: [ opcode (6) | rs (5) | rt (5) | imm (16) ], addi $t0, $t1, 10
 // r-type: [ opcode (6) | rs (5) | rt (5) | rd (5) | shamt (5) | funct (6) ], add $t0, $t1, $t2
