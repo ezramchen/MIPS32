@@ -1187,7 +1187,7 @@ module CPU(
         ((mctrl_ex[13:12] == 2'b11) && ($signed(rd1_ex) > 0))
     );
 
-    assign control_taken_ex = branch_taken_ex || mctrl_ex[11] || mctrl_ex[10];
+    assign control_taken_ex = branch_taken_ex || (mctrl_ex[11:10] == 2'b11);
     assign we_ex = mctrl_ex[31];
 
     mux2_32 HiMux(
