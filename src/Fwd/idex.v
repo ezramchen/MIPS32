@@ -23,6 +23,8 @@ module ID_EX(
     input [4:0] wa_id,
     input [4:0] rs_id,
     input [4:0] rt_id,
+    input uses_rs_id,
+    input uses_rt_id,
 
     // EX
     output reg [31:0] pc4_ex,
@@ -33,7 +35,9 @@ module ID_EX(
     output reg [31:0] mctrl_ex,
     output reg [4:0] wa_ex,
     output reg [4:0] rs_ex,
-    output reg [4:0] rt_ex
+    output reg [4:0] rt_ex,
+    output reg uses_rs_ex,
+    output reg uses_rt_ex
 );
 
     always @(posedge clk) begin 
@@ -47,6 +51,8 @@ module ID_EX(
             wa_ex <= 5'b0;
             rs_ex <= 5'b0;
             rt_ex <= 5'b0;
+            uses_rs_ex <= 1'b0;
+            uses_rt_ex <= 1'b0;
         end else if(en) begin 
             pc4_ex <= pc4_id;
             rd1_ex <= rd1_id;
@@ -57,6 +63,8 @@ module ID_EX(
             wa_ex <= wa_id;
             rs_ex <= rs_id;
             rt_ex <= rt_id;
+            uses_rs_ex <= uses_rs_id;
+            uses_rt_ex <= uses_rt_id;
         end
     end
 endmodule
