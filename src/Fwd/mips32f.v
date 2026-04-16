@@ -657,6 +657,8 @@ module ID_EX(
     input [4:0] wa_id,
     input [4:0] rs_id,
     input [4:0] rt_id,
+    input uses_rs_id,
+    input uses_rt_id,
 
     // EX
     output reg [31:0] pc4_ex,
@@ -667,7 +669,9 @@ module ID_EX(
     output reg [31:0] mctrl_ex,
     output reg [4:0] wa_ex,
     output reg [4:0] rs_ex,
-    output reg [4:0] rt_ex
+    output reg [4:0] rt_ex,
+    output reg uses_rs_ex,
+    output reg uses_rt_ex
 );
 
     always @(posedge clk) begin 
@@ -681,6 +685,8 @@ module ID_EX(
             wa_ex <= 5'b0;
             rs_ex <= 5'b0;
             rt_ex <= 5'b0;
+            uses_rs_ex <= 1'b0;
+            uses_rt_ex <= 1'b0;
         end else if(en) begin 
             pc4_ex <= pc4_id;
             rd1_ex <= rd1_id;
@@ -691,6 +697,8 @@ module ID_EX(
             wa_ex <= wa_id;
             rs_ex <= rs_id;
             rt_ex <= rt_id;
+            uses_rs_ex <= uses_rs_id;
+            uses_rt_ex <= uses_rt_id;
         end
     end
 endmodule
@@ -1026,11 +1034,16 @@ module CPU(
     wire we_wb;
     wire [31:0] wb_out_wb;
 
+    // Hazard/Forwarding Flags
+    
+    wire uses_rs_id;
+    wire uses_rt_id;
+
     wire uses_rs_ex;
     wire uses_rt_ex;
 
-    assign uses_rs_ex = ~mctrl_ex[11] || mctrl_ex[10];
-    assign uses_rt_ex = ~mctrl_ex[20] || mctrl_ex[14] || mctrl_ex[24];
+    assign uses_rs_id = ~mctrl_id[11] || mctrl_id[10];
+    assign uses_rt_id = ~mctrl_id[20] || mctrl_id[14] || mctrl_id[24];
 
     // =========================
     // Global pipeline control
@@ -1148,8 +1161,8 @@ module CPU(
         .memrd_ex(mctrl_ex[25]),
         .rs_id(rs_id),
         .rt_id(rt_id),
-        .uses_rs(uses_rs_ex),
-        .uses_rt(uses_rt_ex),
+        .uses_rs(uses_rs_id),
+        .uses_rt(uses_rt_id),
         .hiwr_mem(mctrl_mem[9]),
         .lowr_mem(mctrl_mem[8]),
         .hiwr_ex(mctrl_ex[9]),
@@ -1188,6 +1201,8 @@ module CPU(
         .wa_id(wa_id),
         .rs_id(rs_id),
         .rt_id(rt_id),
+        .uses_rs_id(uses_rs_id),
+        .uses_rt_id(uses_rt_id),
         .pc4_ex(pc4_ex),
         .rd1_ex(rd1_ex),
         .rd2_ex(rd2_ex),
@@ -1196,7 +1211,9 @@ module CPU(
         .mctrl_ex(mctrl_ex),
         .wa_ex(wa_ex),
         .rs_ex(rs_ex),
-        .rt_ex(rt_ex)
+        .rt_ex(rt_ex),
+        .uses_rs_ex(uses_rs_ex),
+        .uses_rt_ex(uses_rt_ex)
     );
 
     // =========================
